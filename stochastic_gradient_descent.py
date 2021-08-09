@@ -31,3 +31,22 @@ if __name__ == '__main__':
     sgd_reg = SGDRegressor()
     sgd_reg.fit(X, y)
     print(sgd_reg.intercept_, sgd_reg.coef_)
+
+    print('minibatch numpy')
+    n_iterations = 50
+    minibatch_size = 20
+    theta = np.random.randn(2, 1)  # random initialization
+    t0, t1 = 200, 1000
+    t = 0
+    for epoch in range(n_iterations):
+        shuffled_indices = np.random.permutation(m)
+        X_b_shuffled = X_b[shuffled_indices]
+        y_shuffled = y[shuffled_indices]
+        for i in range(0, m, minibatch_size):
+            t += 1
+            xi = X_b_shuffled[i:i + minibatch_size]
+            yi = y_shuffled[i:i + minibatch_size]
+            gradients = 2 / minibatch_size * xi.T.dot(xi.dot(theta) - yi)
+            eta = learning_schedule(t)
+            theta = theta - eta * gradients
+    print(theta)
