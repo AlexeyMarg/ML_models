@@ -1,5 +1,6 @@
 import numpy as np
 from dataset_generation import generate_linear_dataset
+from sklearn.linear_model import SGDRegressor
 
 n_epochs = 50
 t0, t1 = 5, 50  # learning tare decreasing
@@ -25,3 +26,8 @@ if __name__ == '__main__':
             eta = learning_schedule(epoch * m + i)
             theta = theta - eta * gradients
     print(theta)
+
+    print('sklearn solution')
+    sgd_reg = SGDRegressor()
+    sgd_reg.fit(X, y)
+    print(sgd_reg.intercept_, sgd_reg.coef_)
