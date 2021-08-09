@@ -12,5 +12,6 @@ def plot_dataset(X, y):
     plt.plot(X, y, 'o')
     plt.show()
 
-X, y = generate_linear_dataset(100)
-plot_dataset(X, y)
+if __name__ == '__main__':
+    X, y = generate_linear_dataset(100)
+    plot_dataset(X, y)
