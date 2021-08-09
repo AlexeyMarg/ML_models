@@ -16,11 +16,16 @@ if __name__ == '__main__':
     theta_hat = solve_normal_equation(X,y)
     print(theta_hat)
 
-
+    print('Solution with sklearn:')
+    lin_reg = LinearRegression()
+    lin_reg.fit(X,y)
+    print(lin_reg.intercept_, lin_reg.coef_)
 
     X_new = np.array([[0], [2]])
     X_new_b = np.c_[np.ones((2, 1)), X_new]
-    y_predict = X_new_b.dot(theta_hat)
+    y_predict_np = X_new_b.dot(theta_hat)
+    y_predict_LinearRegressor = lin_reg.predict(X_new)
     plt.plot(X, y, 'o')
-    plt.plot(X_new, y_predict)
+    plt.plot(X_new, y_predict_np,
+             X_new, y_predict_LinearRegressor)
     plt.show()
