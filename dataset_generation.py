@@ -8,6 +8,11 @@ def generate_linear_dataset(m):
     y = 4 + 3 * X + np.random.randn(100, 1)
     return X, y
 
+def generate_parabola_dataset(m):
+    X = 6 * np.random.rand(m, 1) - 3
+    y = 0.5 * X ** 2 + X + 2 + np.random.randn(m, 1)
+    return X, y
+
 def plot_dataset(X, y):
     plt.plot(X, y, 'o')
     plt.show()
