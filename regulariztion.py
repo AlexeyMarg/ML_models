@@ -1,5 +1,5 @@
 from dataset_generation import generate_parabola_dataset, plot_dataset
-from sklearn.linear_model import Ridge, SGDRegressor
+from sklearn.linear_model import Ridge, SGDRegressor, Lasso
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import PolynomialFeatures
@@ -22,7 +22,14 @@ sgd_reg.fit(X_poly, y)
 print(sgd_reg.intercept_, sgd_reg.coef_)
 y_predict_sgd = sgd_reg.predict(X_new_poly)
 
+print('Solution with LASSO regularization (add sum of parameters modules to MSE, solve normal equation)')
+lasso_reg = Lasso(alpha=0.1)
+lasso_reg.fit(X_poly, y)
+print(lasso_reg.intercept_, lasso_reg.coef_)
+y_predict_lasso = lasso_reg.predict(X_new_poly)
+
 
 plt.plot(X_new, y_predict_ridge,
-         X_new, y_predict_sgd)
+         X_new, y_predict_sgd,
+         X_new, y_predict_lasso)
 plot_dataset(X, y)
