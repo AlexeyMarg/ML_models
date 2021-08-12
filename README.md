@@ -12,7 +12,7 @@
 - logistic_regression.py - logistic regression classifier
 
 ##SVM:
-- linear_SVM.py - linear SVM for iris dataset
-- polynomial_SVM.py - polynomial SVM for nonlinear dataset
-- kernel_SVM.py - SVM with kernel trick instead polynomial
-- rbf_SVM.py - SVM with Gaussian RBF kernel
+- linear_SVM_clf.py - linear SVM classifier for iris dataset
+- polynomial_SVM_clf.py - polynomial SVM classifier for nonlinear dataset
+- kernel_SVM.py - SVM classifier with kernel trick instead polynomial
+- rbf_SVM_clf.py - SVM classifier with Gaussian RBF kernel
