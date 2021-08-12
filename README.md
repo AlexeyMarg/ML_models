@@ -10,3 +10,6 @@
     - lasso regularization (add l1 norm of parameters vector to MSE)
     - elastic net regularization - mix of both
 - logistic_regression.py - logistic regression classifier
+
+##SVM:
+- linear_SVM.py - linear SVM for iris dataset
