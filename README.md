@@ -13,3 +13,4 @@
 
 ##SVM:
 - linear_SVM.py - linear SVM for iris dataset
+- polynomial_SVM.py - polynomial SVM for nonlinear dataset
