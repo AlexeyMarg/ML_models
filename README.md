@@ -14,3 +14,4 @@
 ##SVM:
 - linear_SVM.py - linear SVM for iris dataset
 - polynomial_SVM.py - polynomial SVM for nonlinear dataset
+- kernel_SVM.py - SVM with kernel trick instead polynomial
