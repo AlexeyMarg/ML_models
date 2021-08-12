@@ -1,6 +1,5 @@
 import  numpy as np
-from dataset_generation import generate_linear_dataset
-import matplotlib.pyplot as plt
+from linear_models.dataset_generation import generate_linear_dataset
 
 if __name__ == '__main__':
     m=100

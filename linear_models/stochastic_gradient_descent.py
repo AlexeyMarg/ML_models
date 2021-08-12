@@ -1,5 +1,5 @@
 import numpy as np
-from dataset_generation import generate_linear_dataset
+from linear_models.dataset_generation import generate_linear_dataset
 from sklearn.linear_model import SGDRegressor
 
 n_epochs = 50

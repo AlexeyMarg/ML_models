@@ -1,4 +1,4 @@
-from dataset_generation import generate_parabola_dataset, plot_dataset
+from linear_models.dataset_generation import generate_parabola_dataset, plot_dataset
 from sklearn.linear_model import Ridge, SGDRegressor, Lasso, ElasticNet
 import numpy as np
 import matplotlib.pyplot as plt

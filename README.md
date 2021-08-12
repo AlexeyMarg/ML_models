@@ -1,4 +1,6 @@
-# ML_linear_models
+# ML_models
+##linear_models:
+
 - dataset_generation.py - generation of datasets
 - normal_equation.py - solution of linear regression with use of normal equation
 - gradient_descent.py - solution of linear regression with use of gradient descent
@@ -7,3 +9,4 @@
     - ridge (add l2 norm of parameters vector to MSE)
     - lasso regularization (add l1 norm of parameters vector to MSE)
     - elastic net regularization - mix of both
+- logistic_regression.py - logistic regression classifier
