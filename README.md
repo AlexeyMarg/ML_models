@@ -17,3 +17,4 @@
 - kernel_SVM.py - SVM classifier with kernel trick instead polynomial
 - rbf_SVM_clf.py - SVM classifier with Gaussian RBF kernel
 - linear_SVM_reg.py - SVM linear regressor
+- kernel_SVM_reg.py - SVM kernel regressor
