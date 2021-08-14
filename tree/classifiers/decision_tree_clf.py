@@ -16,5 +16,7 @@ tree_clf.fit(X_train, y_train)
 y_pred = tree_clf.predict(X_test)
 print(accuracy_score(y_test, y_pred))
 
+print(tree_clf.predict_proba([[5, 1.5]]))
+
 plot_tree(tree_clf)
 plt.show()
