@@ -34,3 +34,4 @@ regressors:
 
 ##Voting classifiers
 - voting_clf.py - voting classifier with random forrest, SVM and logistic regression
+- bagging_clf.py - use of bagging (random choise of train data) for decision tree in iris task
