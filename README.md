@@ -27,6 +27,7 @@ regressors:
 ##Decision tree:
 classifiers:
 - decision_tree_clf.py - decision tree for iris classification
+- random_forest_clf.py - random forest for iris classification
 
 regressors:
 - decision_tree_reg.py - decision tree regressor for noised parabola
