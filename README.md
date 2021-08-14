@@ -30,3 +30,6 @@ classifiers:
 
 regressors:
 - decision_tree_reg.py - decision tree regressor for noised parabola
+
+##Voting classifiers
+- voting_clf.py - voting classifier with random forrest, SVM and logistic regression
