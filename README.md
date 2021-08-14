@@ -32,7 +32,8 @@ classifiers:
 regressors:
 - decision_tree_reg.py - decision tree regressor for noised parabola
 
-##Voting classifiers
+##Ensembles
 - voting_clf.py - voting classifier with random forrest, SVM and logistic regression
 - bagging_clf.py - use of bagging (random choise of train data) for decision tree in iris task
-- AdaBoost_clf.py - use of adaptive boosting for decision tree in iris task 
+- AdaBoost_clf.py - use of adaptive boosting for decision tree in iris task
+- gradient_boost_reg.py - gradient boosting regressor for noised parabola
