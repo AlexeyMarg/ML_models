@@ -23,3 +23,10 @@ classifiers:
 regressors:
 - linear_SVM_reg.py - SVM linear regressor
 - kernel_SVM_reg.py - SVM kernel regressor
+
+##Decision tree:
+classifiers:
+- decision_tree_clf.py - decision tree for iris classification
+
+regressors:
+- decision_tree_reg.py - decision tree regressor for noised parabola
