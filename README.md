@@ -37,3 +37,6 @@ regressors:
 - bagging_clf.py - use of bagging (random choise of train data) for decision tree in iris task
 - AdaBoost_clf.py - use of adaptive boosting for decision tree in iris task
 - gradient_boost_reg.py - gradient boosting regressor for noised parabola
+
+##Dimensions reduction
+- PCA.py - handmade and sklearn principal component reduction for dimension reduction
