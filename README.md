@@ -40,3 +40,4 @@ regressors:
 
 ##Dimensions reduction
 - PCA.py - handmade and sklearn principal component reduction for dimension reduction
+= batch_PCA.py - incremental PCA (less use of memory) for batch principal component reduction for dimension reduction for MNIST
