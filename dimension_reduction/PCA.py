@@ -19,6 +19,7 @@ def my_PCA(X):
 
 pca = PCA(n_components=2)
 X2D = pca.fit_transform(X)
+print(pca.explained_variance_ratio_)
 
 X_train, X_test, y_train, y_test = train_test_split(X2D, y)
 
