@@ -19,6 +19,7 @@ def my_PCA(X):
 
 pca = PCA(n_components=2) # n_components=0.95 is an automatic search of n_components to save 95% variance
 X2D = pca.fit_transform(X)
+X_recovered = pca.inverse_transform(X2D) # restore reduced dataset
 print(pca.explained_variance_ratio_)
 
 X_train, X_test, y_train, y_test = train_test_split(X2D, y)
