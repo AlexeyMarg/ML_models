@@ -17,7 +17,7 @@ def my_PCA(X):
 
 #X2D = my_PCA(X)
 
-pca = PCA(n_components=2)
+pca = PCA(n_components=2) # n_components=0.95 is an automatic search of n_components to save 95% variance
 X2D = pca.fit_transform(X)
 print(pca.explained_variance_ratio_)
 
