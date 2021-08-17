@@ -10,3 +10,10 @@ with tf.compat.v1.Session() as sess:
     y.initializer.run()
     result = sess.run(f)
     print(result)
+
+init = tf.compat.v1.global_variables_initializer()
+
+with tf.compat.v1.Session() as sess:
+    init.run()
+    result = sess.run(f)
+    print(result)
