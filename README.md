@@ -43,3 +43,6 @@ regressors:
 = batch_PCA.py - incremental PCA (less use of memory) for batch principal component reduction for dimension reduction for MNIST
 - kernel_PCA.py - kernel PCA dimension reduction
 - LLE.py - Locally linear embedding for dimension reduction
+
+##tensor_flow
+- hello_world.py - hello world for tensor flow
