@@ -26,3 +26,7 @@ r3_matrix = tf.constant([ [[1, 2],
 print(r3_matrix)
 print('Shape of r3_matrix is ', r3_matrix.shape)
 
+# creation of ones and zeros matrices
+print(tf.zeros(10))
+print(tf.ones([2, 2]))
+print(tf.eye(3))
