@@ -47,3 +47,6 @@ regressors:
 ##tensor_flow
 - hello_world.py - hello world for tensor flow
 - tf_linear_reg.py - linear regression with use of tensor flow
+
+##neural_network
+- sklearn_perceptrin_clf.py - sklearn perceptron for iris dataset classification
