@@ -37,3 +37,19 @@ print('\ndata transformation')
 print('r2 tensor is', r2, ' dtype is ', r2.dtype)
 r2_toint = tf.cast(r2, dtype=tf.int32)
 print('transform to int:', r2_toint, ' dtype is ', r2_toint.dtype)
+
+#math operations
+print('\nMath operations:')
+x = tf.constant(2.0, dtype=tf.float32)
+print('sqrt of ', x, 'is ', tf.sqrt(x))
+
+y = tf.constant([1.0, 2.0], dtype=tf.float32)
+z = tf.constant([3.0, 4.0], dtype=tf.float32)
+print('Sum of ', y, 'and ', z, ' is ', tf.add(y, z))
+
+print('Subtract of ', y, 'and ', z, ' is ', tf.subtract(y, z))
+
+y = tf.constant([[1, 2]])
+z = tf.constant([[3], [4]])
+print('Multiplication of ', y, 'and ', z, ' is ', tf.multiply(y, z))
+# tf.div(), tf.pow(a, b) ...
