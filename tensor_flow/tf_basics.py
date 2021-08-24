@@ -25,8 +25,15 @@ r3_matrix = tf.constant([ [[1, 2],
                            [5, 6]] ], tf.int16)
 print(r3_matrix)
 print('Shape of r3_matrix is ', r3_matrix.shape)
+print('r3_matriz data type is ', r3_matrix.dtype)
 
 # creation of ones and zeros matrices
 print(tf.zeros(10))
 print(tf.ones([2, 2]))
 print(tf.eye(3))
+
+# data type transformation
+print('\ndata transformation')
+print('r2 tensor is', r2, ' dtype is ', r2.dtype)
+r2_toint = tf.cast(r2, dtype=tf.int32)
+print('transform to int:', r2_toint, ' dtype is ', r2_toint.dtype)
