@@ -53,3 +53,9 @@ y = tf.constant([[1, 2]])
 z = tf.constant([[3], [4]])
 print('Multiplication of ', y, 'and ', z, ' is ', tf.multiply(y, z))
 # tf.div(), tf.pow(a, b) ...
+
+#variables creation
+x = tf.constant([[1, 2], [3, 4]])
+var = tf.Variable(x)
+print('\nInitialized variable: ', var)
+print('Assigned variable:', var.assign([[3, 4], [5, 6]]))
