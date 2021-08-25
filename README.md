@@ -48,3 +48,4 @@ regressors:
 - hello_world.py - hello world for tensor flow
 - tf_linear_reg.py - linear regression with use of tensor flow
 - tf_basics.py - basics of tensor flow
+- auto_diff_gradients.py - automatic differentioation and gradients with use of tensorflow
