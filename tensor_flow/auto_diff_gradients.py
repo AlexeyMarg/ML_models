@@ -22,11 +22,15 @@ target (often a loss) relative to some source (often the model's variables):
 dy_dx = tape.gradient(y, x)
 print(dy_dx.numpy())
 
+
+
 '''
-The above example uses scalars, but tf.GradientTape works as easily on any tensor:
+#The above example uses scalars, but tf.GradientTape works as easily on any tensor:
 '''
 w = tf.Variable(tf.random.normal( (3, 2) ), name='w')
+print(w)
 b = tf.Variable(tf.zeros( (2) ), dtype=tf.float32, name='b')
+print(b)
 x = [[1, 2, 3]]
 
 with tf.GradientTape(persistent=True) as tape:
@@ -43,3 +47,21 @@ my_vars = {
 }
 grad = tape.gradient(loss, my_vars)
 print(grad['b'])
+
+'''
+#Gradient with respect to a model
+'''
+
+layer = tf.keras.layers.Dense(2, activation='relu')
+x = tf.constant( [ [1., 2., 3.] ])
+with tf.GradientTape() as tape:
+    #Forward pass
+    y = layer(x)
+    loss = tf.reduce_mean(y ** 2)
+
+# Calculate gradients with respect to every trainable variable
+grad = tape.gradient(loss, layer.trainable_variables)
+
+for var, g in zip(layer.trainable_variables, grad):
+    print(f'{var.name}, shape: {g.shape}')
+
