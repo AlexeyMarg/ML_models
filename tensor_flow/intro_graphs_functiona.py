@@ -26,3 +26,21 @@ print(regular_value)
 tensorflow_function_value = function_that_usses_tensorflow(x1, y1, b1).numpy()
 print(tensorflow_function_value)
 assert(regular_value == tensorflow_function_value)
+
+# use of decorator
+
+def inner_function(x, y, b):
+    x = tf.matmul(x, y)
+    x = x + b
+    return x
+
+# Use the decorator to make `outer_function` a `Function`.
+@tf.function
+def outer_function(x):
+    y = tf.constant([ [2.], [3.] ])
+    b = tf.constant(4.)
+    return inner_function(x, y, b)
+
+# Note that the callable will create a graph that
+# includes `inner_function` as well as `outer_function`.
+print(outer_function(tf.constant([[1.0, 2.0]])).numpy())
