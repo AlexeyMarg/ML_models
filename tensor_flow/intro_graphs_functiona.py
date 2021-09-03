@@ -44,3 +44,28 @@ def outer_function(x):
 # Note that the callable will create a graph that
 # includes `inner_function` as well as `outer_function`.
 print(outer_function(tf.constant([[1.0, 2.0]])).numpy())
+
+'''
+Converting Python functions to graphs
+Any function you write with TensorFlow will contain a mixture of built-in TF operations and Python logic, such as if-then clauses, 
+loops, break, return, continue, and more. While TensorFlow operations are easily captured by a tf.Graph, 
+Python-specific logic needs to undergo an extra step in order to become part of the graph. tf.function uses a library called AutoGraph (tf.autograph) 
+to convert Python code into graph-generating code.
+'''
+
+def simple_relu(x):
+    if tf.greater(x, 0):
+        return x
+    else:
+        return 0
+
+# `tf_simple_relu` is a TensorFlow `Function` that wraps `simple_relu`.
+tf_simple_relu = tf.function(simple_relu)
+print('First branch, with graph', tf_simple_relu(tf.constant(1)).numpy())
+print('First branch, with graph', tf_simple_relu(tf.constant(-1)).numpy())
+
+# This is the graph-generating output of AutoGraph.
+print(tf.autograph.to_code(simple_relu))
+
+# This is the graph itself.
+print(tf_simple_relu.get_concrete_function(tf.constant(1)).graph.as_graph_def())
