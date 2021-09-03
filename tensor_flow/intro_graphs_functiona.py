@@ -69,3 +69,29 @@ print(tf.autograph.to_code(simple_relu))
 
 # This is the graph itself.
 print(tf_simple_relu.get_concrete_function(tf.constant(1)).graph.as_graph_def())
+
+
+'''
+Difference of eager and graph execution
+The code in a Function can be executed both eagerly and as a graph. By default, Function executes its code as a graph.
+However, Function can behave differently under graph and eager execution. The Python print function is one example of how these two modes differ. 
+Let's check out what happens when you insert a print statement to your function and call it repeatedly.
+'''
+y_true = tf.random.uniform([5], maxval=10, dtype=tf.int32)
+y_pred = tf.random.uniform([5], maxval=10, dtype=tf.int32)
+
+@tf.function
+def get_MSE(y_true, y_pred):
+  print("Calculating MSE!")
+  sq_diff = tf.pow(y_true - y_pred, 2)
+  return tf.reduce_mean(sq_diff)
+print('Graph execution')
+error = get_MSE(y_true, y_pred)
+error = get_MSE(y_true, y_pred)
+error = get_MSE(y_true, y_pred)
+print('Eager execution')
+tf.config.run_functions_eagerly(True)
+error = get_MSE(y_true, y_pred)
+error = get_MSE(y_true, y_pred)
+error = get_MSE(y_true, y_pred)
+tf.config.run_functions_eagerly(False)
