@@ -17,3 +17,7 @@ class SimpleModule(tf.Module):
 
 simple_module = SimpleModule(name='simple')
 print(simple_module(tf.constant(5.)))
+# All trainable variables
+print("trainable variables:", simple_module.trainable_variables)
+# Every variable
+print("all variables:", simple_module.variables)
