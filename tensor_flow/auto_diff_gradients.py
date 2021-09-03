@@ -122,3 +122,32 @@ grad = tape.gradient(ys, {'x0': x0, 'x1': x1})
 
 print('dy/dx0:', grad['x0'])
 print('dy/dx1:', grad['x1'].numpy())
+
+'''
+Intermediate results
+You can also request gradients of the output with respect to intermediate values computed inside the tf.GradientTape context.
+'''
+
+x = tf.constant(3.0, name='x')
+with tf.GradientTape() as tape:
+    tape.watch(x)
+    y = x ** 2
+    z = y ** 2
+
+# Use the tape to compute the gradient of z with respect to the
+# intermediate value y.
+# dz_dy = 2 * y and y = x ** 2 = 9
+print(tape.gradient(z, y).numpy())
+
+#By default, the resources held by a GradientTape are released as soon as the GradientTape.gradient method is called.
+# To compute multiple gradients over the same computation, create a gradient tape with persistent=True.
+# This allows multiple calls to the gradient method as resources are released when the tape object is garbage collected. For example:
+
+x = tf.constant([1, 3.0])
+with tf.GradientTape(persistent=True) as tape:
+    tape.watch(x)
+    y = x ** 2
+    z = y ** 2
+
+print(tape.gradient(z, x).numpy())
+print(tape.gradient(y, x).numpy())
