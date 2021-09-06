@@ -39,3 +39,16 @@ print("Variables:", model.variables)
 
 # Verify the model works
 assert model(3.0).numpy() == 15.0
+
+'''
+Define a loss function
+'''
+
+def loss(y_targer, y_predicted):
+    return tf.reduce_mean(tf.square(y_targer - y_predicted))
+
+print("Current loss: %1.6f" % loss(y, model(x)).numpy())
+
+plt.scatter(x, y, c="b")
+plt.scatter(x, model(x), c="r")
+plt.show()
