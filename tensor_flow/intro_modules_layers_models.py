@@ -161,3 +161,26 @@ print('flexible_dense variables before build: ', flexible_dense.variables)
 # Call it, with predictably random results
 print("Model results:", flexible_dense(tf.constant([[2.0, 2.0, 2.0], [3.0, 3.0, 3.0]])))
 #Since build is only called once, inputs will be rejected if the input shape is not compatible with the layer's variables
+
+'''
+Keras models
+You can define your model as nested Keras layers.
+However, Keras also provides a full-featured model class called tf.keras.Model. It inherits from tf.keras.layers.
+Layer, so a Keras model can be used, nested, and saved in the same way as Keras layers. Keras models come with extra 
+functionality that makes them easy to train, evaluate, load, save, and even train on multiple machines.
+You can define the SequentialModule from above with nearly identical code, again converting __call__ to call() and changing the parent:
+'''
+
+class MySequentialModel(tf.keras.Model):
+    def __init__(self, name=None, **kwargs):
+        super().__init__(**kwargs)
+
+        self.dense_1 = FlexibleDense(out_features=3)
+        self.dense_2 = FlexibleDense(out_features=2)
+
+    def call(self, x):
+        x = self.dense_1(x)
+        return self.dense_2(x)
+
+my_sequential_model = MySequentialModel(name='the_model')
+print('MySequentialModel results: ', my_sequential_model(tf.constant([ [2.0, 2.0, 2.0] ])))
