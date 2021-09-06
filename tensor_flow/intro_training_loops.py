@@ -92,8 +92,24 @@ plt.legend(["w", "b", "True W", "True b"])
 
 plt.scatter(x, y, c="b")
 plt.scatter(x, model(x), c="r")
-plt.show()
+#plt.show()
 
 print("Current loss: %1.6f" % loss(model(x), y).numpy())
+
+'''
+The same solution, but with Keras
+'''
+class MyKerasModel(tf.keras.Model):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.w = tf.Variable(5.)
+        self.b = tf.Variable(2.)
+
+    def call(self, x):
+        return x * self.w + self.b
+
+keras_model = MyKerasModel()
+
+training_loop(keras_model, x, y)
 
 
