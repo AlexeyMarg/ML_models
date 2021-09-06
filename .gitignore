@@ -115,3 +115,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+tensor_flow/intro_modules_layers_models.py
+tensor_flow/my_checkpoint.data-00000-of-00001
