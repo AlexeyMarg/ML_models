@@ -109,3 +109,25 @@ Saved model
 
 tf.saved_model.save(my_model, "the_saved_model")
 new_model = tf.saved_model.load("the_saved_model")
+
+'''
+Keras layers
+tf.keras.layers.Layer is the base class of all Keras layers, and it inherits from tf.Module.
+You can convert a module into a Keras layer just by swapping out the parent and then changing __call__ to call:
+'''
+
+class MyDense(tf.keras.layers.Layer):
+    # Adding **kwargs to support base Keras layer arguments
+    def __init__(self, in_features, out_features, **kwargs):
+        super().__init__(**kwargs)
+
+        self.w = tf.Variable(tf.random.normal([in_features, out_features]), name='w')
+        self.b = tf.Variable(tf.zeros([out_features]), name='b')
+
+    def call(self, x):
+        y = tf.matmul(x, self.w) + self.b
+        return tf.nn.relu(y)
+
+simple_layer = MyDense(name='simple', in_features=3, out_features=2)
+print('Use of keras layer')
+print(simple_layer([[2.0, 2.0, 2.0]]))
