@@ -88,3 +88,17 @@ class MyFlexibleSequentialModule(tf.Module):
 my_model = MyFlexibleSequentialModule(name="the_model")
 print("Flexible Model results:", my_model(tf.constant([[2.0, 2.0, 2.0]])))
 
+'''
+Saving weights
+You can save a tf.Module as both a checkpoint and a SavedModel.
+Checkpoints are just the weights (that is, the values of the set of variables inside the module and its submodules):
+'''
+chk_path = 'my_checkpoint'
+checkpoint = tf.train.Checkpoint(model=my_model)
+checkpoint.write(chk_path)
+print(tf.train.list_variables(chk_path))
+
+new_model = MyFlexibleSequentialModule()
+new_checkpoint = tf.train.Checkpoint(new_model)
+new_checkpoint.restore('my_checkpoint')
+print(new_model(tf.constant( [ [2.0, 2.0, 2.0] ] )))
