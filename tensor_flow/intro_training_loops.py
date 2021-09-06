@@ -113,3 +113,29 @@ keras_model = MyKerasModel()
 training_loop(keras_model, x, y)
 
 
+'''
+Rather than write new training loops each time you create a model, you can use the built-in features of Keras as a shortcut. 
+This can be useful when you do not want to write or debug Python training loops.
+If you do, you will need to use model.compile() to set the parameters, and model.fit() to train. 
+It can be less code to use Keras implementations of L2 loss and gradient descent, again as a shortcut. 
+Keras losses and optimizers can be used outside of these convenience functions, too, and the previous example could have used them.
+'''
+
+keras_model = MyKerasModel()
+
+# compile sets the training parameters
+keras_model.compile(
+    # By default, fit() uses tf.function().  You can
+    # turn that off for debugging, but it is on now.
+    run_eagerly=False,
+
+    # Using a built-in optimizer, configuring as an object
+    optimizer=tf.keras.optimizers.SGD(learning_rate=0.1),
+
+    # Keras comes with built-in MSE error
+    # However, you could use the loss function
+    # defined above
+    loss=tf.keras.losses.mean_squared_error,
+)
+
+keras_model.fit(x, y, epochs=10, batch_size=1000)
