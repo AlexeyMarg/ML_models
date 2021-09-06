@@ -65,3 +65,16 @@ def train(model, x, y, learning_rate):
     model.w.assign_sub(learning_rate * dw)
     model.b.assign_sub(learning_rate * db)
 
+w_story, b_story = [], []
+n_epochs = 10
+
+def training_loop(model, x, y)
+    for epoch in range(n_epochs):
+        train(model, x, y, learning_rate=0.1)
+        w_story.append(model.w.numpy())
+        b_story.append((model.b.numpy()))
+        current_loss = loss(y, model(x))
+        print("Epoch %2d: W=%1.2f b=%1.2f, loss=%2.5f" %
+              (epoch, w_story[-1], b_story[-1], current_loss))
+
+
