@@ -102,3 +102,10 @@ new_model = MyFlexibleSequentialModule()
 new_checkpoint = tf.train.Checkpoint(new_model)
 new_checkpoint.restore('my_checkpoint')
 print(new_model(tf.constant( [ [2.0, 2.0, 2.0] ] )))
+
+'''
+Saved model
+'''
+
+tf.saved_model.save(my_model, "the_saved_model")
+new_model = tf.saved_model.load("the_saved_model")
