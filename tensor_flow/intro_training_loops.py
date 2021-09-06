@@ -68,7 +68,7 @@ def train(model, x, y, learning_rate):
 w_story, b_story = [], []
 n_epochs = 10
 
-def training_loop(model, x, y)
+def training_loop(model, x, y):
     for epoch in range(n_epochs):
         train(model, x, y, learning_rate=0.1)
         w_story.append(model.w.numpy())
@@ -76,5 +76,24 @@ def training_loop(model, x, y)
         current_loss = loss(y, model(x))
         print("Epoch %2d: W=%1.2f b=%1.2f, loss=%2.5f" %
               (epoch, w_story[-1], b_story[-1], current_loss))
+
+print("Starting: W=%1.2f b=%1.2f, loss=%2.5f" % (model.w, model.b, loss(y, model(x))))
+model = MyModel()
+training_loop(model, x, y)
+
+plt.plot(range(n_epochs), w_story, "r",
+         range(n_epochs), b_story, "b")
+
+plt.plot([TRUE_W] * n_epochs, "r--",
+         [TRUE_B] * n_epochs, "b--")
+
+plt.legend(["w", "b", "True W", "True b"])
+#plt.show()
+
+plt.scatter(x, y, c="b")
+plt.scatter(x, model(x), c="r")
+plt.show()
+
+print("Current loss: %1.6f" % loss(model(x), y).numpy())
 
 
