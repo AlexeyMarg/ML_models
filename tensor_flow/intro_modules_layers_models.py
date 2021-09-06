@@ -52,3 +52,39 @@ print('Model results: ', my_model(tf.constant([ [2., 2., 2.] ])))
 print('Submodules: ', my_model.submodules)
 for var in my_model.variables:
     print(var)
+
+'''
+Example of a two-layer linear layer model made out of modules with unknown input dimension.
+'''
+print('\n\n\nExample of a two-layer linear layer model made out of modules with unknown input dimension')
+class FlexibleDenseModule(tf.Module):
+    def __init__(self, out_features, name=None):
+        super().__init__(name=name)
+        self.is_built = False
+        self.out_features = out_features
+
+    def __call__(self, x):
+        if not self.is_built == True:
+            self.w = tf.Variable(tf.random.normal( [x.shape[-1], self.out_features] ), name='w')
+            self.b = tf.Variable(tf.zeros([self.out_features]), name='b')
+            self.is_built = True
+
+        y = tf.matmul(x, self.w) + self.b
+        return tf.nn.relu(y)
+
+# Used in a module
+
+class MyFlexibleSequentialModule(tf.Module):
+    def __init__(self, name=None):
+        super().__init__(name=name)
+
+        self.dense_1 = FlexibleDenseModule(out_features=3)
+        self.dense_2 = FlexibleDenseModule(out_features=2)
+
+    def __call__(self, x):
+        x = self.dense_1(x)
+        return self.dense_2(x)
+
+my_model = MyFlexibleSequentialModule(name="the_model")
+print("Flexible Model results:", my_model(tf.constant([[2.0, 2.0, 2.0]])))
+
