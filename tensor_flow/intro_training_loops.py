@@ -19,4 +19,23 @@ noise = tf.random.normal(shape=[N_SAMPLES])
 y = x * TRUE_W + TRUE_B + noise
 
 plt.scatter(x, y, c='b')
-plt.show()
+#plt.show()
+
+class MyModel(tf.Module):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Initialize the weights to `5.0` and the bias to `0.0`
+        # In practice, these should be randomly initialized
+        self.w = tf.Variable(5.)
+        self.b = tf.Variable(0.)
+
+    def __call__(self, x):
+        return x * self.w + self.b
+
+model = MyModel()
+
+# List the variables tf.modules's built-in variable aggregation.
+print("Variables:", model.variables)
+
+# Verify the model works
+assert model(3.0).numpy() == 15.0
