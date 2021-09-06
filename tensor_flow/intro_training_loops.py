@@ -51,4 +51,17 @@ print("Current loss: %1.6f" % loss(y, model(x)).numpy())
 
 plt.scatter(x, y, c="b")
 plt.scatter(x, model(x), c="r")
-plt.show()
+#plt.show()
+
+'''
+Train loop
+'''
+def train(model, x, y, learning_rate):
+    with tf.GradientTape() as tape:
+        current_loss = loss(y, model(x))
+
+    dw, db = tape.gradient(current_loss, [model.w, model.b])
+
+    model.w.assign_sub(learning_rate * dw)
+    model.b.assign_sub(learning_rate * db)
+
