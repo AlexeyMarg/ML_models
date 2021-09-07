@@ -34,3 +34,15 @@ model.add(layers.Dense(4))
 print(model.layers)
 model.pop()
 print(len(model.layers))
+
+'''
+Specify input form
+'''
+
+model = keras.Sequential(
+    [
+        layers.Input(shape=(4,)),
+        layers.Dense(2, activation='relu')
+    ]
+)
+model.summary()
