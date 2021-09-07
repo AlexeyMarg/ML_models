@@ -46,3 +46,8 @@ model = keras.Sequential(
     ]
 )
 model.summary()
+
+#Other way
+model = keras.Sequential()
+model.add(layers.Dense(2, activation="relu", input_shape=(4,)))
+model.summary()
