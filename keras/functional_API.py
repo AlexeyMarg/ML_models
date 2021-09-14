@@ -32,3 +32,9 @@ history = model.fit(x_train, y_train, batch_size=64, epochs=2, validation_split=
 test_scores = model.evaluate(x_test, y_test, verbose=2)
 print('Test loss: ', test_scores[0])
 print('Test accuracy: ', test_scores[1])
+
+# Save and load model
+model.save('my_model')
+del model
+model = keras.models.load_model('my_model')
+print(model)
