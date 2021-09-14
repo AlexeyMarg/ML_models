@@ -91,3 +91,19 @@ Precision()
 Recall()
 etc.
 '''
+
+'''
+Custom losses
+If you need to create a custom loss, Keras provides two ways to do so.
+The first method involves creating a function that accepts inputs y_true and y_pred. 
+The following example shows a loss function that computes the mean squared error between the real data and the predictions:
+'''
+
+def custom_mean_squared_error(y_true, y_pred):
+    return tf.math.reduce_mean(tf.square(y_true - y_pred))
+
+model = get_uncompiled_model()
+model.compile(optimizer=keras.optimizers.Adam(),
+              loss=custom_mean_squared_error)
+y_train_one_hot = tf.one_hot(y_train, depth=10)
+model.fit(x_train, y_train_one_hot, batch_size=64, epochs=1)
