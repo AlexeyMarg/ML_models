@@ -160,3 +160,44 @@ model.fit(
     epochs=2,
     batch_size=32,
 )
+
+'''
+Extend the API using custom layers
+tf.keras includes a wide range of built-in layers, for example:
+
+Convolutional layers: Conv1D, Conv2D, Conv3D, Conv2DTranspose
+Pooling layers: MaxPooling1D, MaxPooling2D, MaxPooling3D, AveragePooling1D
+RNN layers: GRU, LSTM, ConvLSTM2D
+BatchNormalization, Dropout, Embedding, etc.
+But if you don't find what you need, it's easy to extend the API by creating your own layers. All layers subclass the Layer class and implement:
+
+call method, that specifies the computation done by the layer.
+build method, that creates the weights of the layer (this is just a style convention since you can create weights in __init__, as well).
+To learn more about creating layers from scratch, read custom layers and models guide.
+
+The following is a basic implementation of tf.keras.layers.Dense:
+'''
+
+class CustomDense(layers.Layer):
+    def __init__(self, units=32):
+        super(CustomDense, self).__init__()
+        self.units = units
+
+    def build(self, input_shape):
+        self.w = self.add_weight(
+            shape=(input_shape[-1], self.units),
+            initializer="random_normal",
+            trainable=True,
+        )
+        self.b = self.add_weight(
+            shape=(self.units,), initializer="random_normal", trainable=True
+        )
+
+    def call(self, inputs):
+        return tf.matmul(inputs, self.w) + self.b
+
+
+inputs = keras.Input((4,))
+outputs = CustomDense(10)(inputs)
+
+model = keras.Model(inputs, outputs)
