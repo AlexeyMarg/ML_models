@@ -107,3 +107,31 @@ model.compile(optimizer=keras.optimizers.Adam(),
               loss=custom_mean_squared_error)
 y_train_one_hot = tf.one_hot(y_train, depth=10)
 model.fit(x_train, y_train_one_hot, batch_size=64, epochs=1)
+
+'''
+If you need a loss function that takes in parameters beside y_true and y_pred, you can subclass the tf.keras.losses.Loss class and implement the following two methods:
+
+__init__(self): accept parameters to pass during the call of your loss function
+call(self, y_true, y_pred): use the targets (y_true) and the model predictions (y_pred) to compute the model's loss
+Let's say you want to use mean squared error, but with an added term that will de-incentivize prediction values far from 0.5 
+(we assume that the categorical targets are one-hot encoded and take values between 0 and 1). 
+This creates an incentive for the model not to be too confident, which may help reduce overfitting (we won't know if it works until we try!).
+
+Here's how you would do it:
+'''
+class CustomMSE(keras.losses.Loss):
+    def __init__(self, regularization_factor=0.1, name="custom_mse"):
+        super().__init__(name=name)
+        self.regularization_factor = regularization_factor
+
+    def call(self, y_true, y_pred):
+        mse = tf.math.reduce_mean(tf.square(y_true - y_pred))
+        reg = tf.math.reduce_mean(tf.square(0.5 - y_pred))
+        return mse + reg * self.regularization_factor
+
+
+model = get_uncompiled_model()
+model.compile(optimizer=keras.optimizers.Adam(), loss=CustomMSE())
+
+y_train_one_hot = tf.one_hot(y_train, depth=10)
+model.fit(x_train, y_train_one_hot, batch_size=64, epochs=1)
