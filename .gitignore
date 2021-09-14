@@ -1,3 +1,4 @@
+keras/my_model
 tensor_flow/the_saved_model
 tensor_flow/my_checkpoint*
 .idea
