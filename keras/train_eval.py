@@ -7,12 +7,25 @@ When passing data to the built-in training loops of a model, you should either u
 (if your data is small and fits in memory) or tf.data Dataset objects. In the next few paragraphs, 
 we'll use the MNIST dataset as NumPy arrays, in order to demonstrate how to use optimizers, losses, and metrics.
 '''
-inputs = layers.Input(shape=(784,), name='digits')
-x = layers.Dense(64, activation='relu', name='dense_1')(inputs)
-x = layers.Dense(64, activation='relu', name='dense_2')(inputs)
-outputs = layers.Dense(10, activation='softmax', name='predictions')(x)
 
-model = keras.Model(inputs=inputs, outputs=outputs)
+def get_uncompiled_model():
+    inputs = layers.Input(shape=(784,), name='digits')
+    x = layers.Dense(64, activation='relu', name='dense_1')(inputs)
+    x = layers.Dense(64, activation='relu', name='dense_2')(inputs)
+    outputs = layers.Dense(10, activation='softmax', name='predictions')(x)
+    model = keras.Model(inputs=inputs, outputs=outputs)
+    return model
+
+def get_compiled_model():
+    model = get_uncompiled_model()
+    model.compile(
+        optimizer=keras.optimizers.RMSprop(),  # Optimizer
+        # Loss function to minimize
+        loss=keras.losses.SparseCategoricalCrossentropy(),
+        # List of metrics to monitor
+        metrics=[keras.metrics.SparseCategoricalAccuracy()]
+    )
+    return model
 
 (x_train, y_train), (x_test, y_test) = keras.datasets.mnist.load_data()
 
@@ -28,13 +41,8 @@ y_val = y_train[-10000:]
 x_train = x_train[:-10000]
 y_train = y_train[:-10000]
 
-model.compile(
-    optimizer=keras.optimizers.RMSprop(),  # Optimizer
-    # Loss function to minimize
-    loss=keras.losses.SparseCategoricalCrossentropy(),
-    # List of metrics to monitor
-    metrics=[keras.metrics.SparseCategoricalAccuracy()],
-)
+
+model = get_compiled_model()
 
 print("Fit model on training data")
 history = model.fit(
@@ -60,3 +68,26 @@ predictions = model.predict(x_test)
 print("predictions shape:", predictions.shape)
 test_scores = model.evaluate(x_test, y_test)
 print('Test scores: ', test_scores)
+
+'''
+Compile parameters:
+
+Optimizers:
+
+SGD() (with or without momentum)
+RMSprop()
+Adam()
+etc.
+Losses:
+
+MeanSquaredError()
+KLDivergence()
+CosineSimilarity()
+etc.
+Metrics:
+
+AUC()
+Precision()
+Recall()
+etc.
+'''
