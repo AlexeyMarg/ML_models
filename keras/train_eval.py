@@ -177,3 +177,40 @@ model.compile(
     metrics=[CategoricalTruePositives()],
 )
 model.fit(x_train, y_train, batch_size=64, epochs=3)
+
+'''
+Handling losses and metrics that don't fit the standard signature
+The overwhelming majority of losses and metrics can be computed from y_true and y_pred, where y_pred is an output of your model 
+-- but not all of them. For instance, a regularization loss may only require the activation of a layer (there are no targets in this case),
+and this activation may not be a model output.
+
+In such cases, you can call self.add_loss(loss_value) from inside the call method of a custom layer. 
+Losses added in this way get added to the "main" loss during training (the one passed to compile()). 
+Here's a simple example that adds activity regularization (note that activity regularization is built-in in all Keras layers -- 
+this layer is just for the sake of providing a concrete example):
+'''
+
+lass ActivityRegularizationLayer(layers.Layer):
+    def call(self, inputs):
+        self.add_loss(tf.reduce_sum(inputs) * 0.1)
+        return inputs  # Pass-through layer.
+
+
+inputs = keras.Input(shape=(784,), name="digits")
+x = layers.Dense(64, activation="relu", name="dense_1")(inputs)
+
+# Insert activity regularization as a layer
+x = ActivityRegularizationLayer()(x)
+
+x = layers.Dense(64, activation="relu", name="dense_2")(x)
+outputs = layers.Dense(10, name="predictions")(x)
+
+model = keras.Model(inputs=inputs, outputs=outputs)
+model.compile(
+    optimizer=keras.optimizers.RMSprop(learning_rate=1e-3),
+    loss=keras.losses.SparseCategoricalCrossentropy(from_logits=True),
+)
+
+# The displayed loss will be much higher than before
+# due to the regularization component.
+model.fit(x_train, y_train, batch_size=64, epochs=1)
