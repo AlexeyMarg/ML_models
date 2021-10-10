@@ -36,9 +36,9 @@ y = tf.constant(housing.target.reshape(-1, 1), dtype=tf.float32, name='y')
 n_epochs = 1000
 learning_rate = 0.01
 
+theta = tf.Variable(tf.random.uniform([n + 1, 1], -1.0, 1.0), name='theta')
 for epoch in range(n_epochs):
     if epoch % 100 == 0:
-        theta = tf.Variable(tf.random.uniform([n + 1, 1], -1.0, 1.0), name='theta')
         y_pred = tf.matmul(X, theta, name='predictions')
         error = y - y_pred
         mse = tf.reduce_min(tf.square(error), name='mse')
