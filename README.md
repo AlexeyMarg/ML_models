@@ -49,3 +49,11 @@ regressors:
 - tf_linear_reg.py - linear regression with use of tensor flow
 - tf_basics.py - basics of tensor flow
 - auto_diff_gradients.py - automatic differentioation and gradients with use of tensorflow
+- intro_graph_functions.py - introduction to graphs and functions
+- intro_training_loops.py - introduction for training loops
+- tf_grad_descent_handmade - handmade gradient descent with use of tensor_flow
+
+## keras
+- sequential_model.py = examples of sequential models
+- functional_API.py - intro to create and compile models and customization
+- train_eval.py -  - intro to train and eval models, algorithms and metrics customization
