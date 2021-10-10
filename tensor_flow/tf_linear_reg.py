@@ -1,6 +1,6 @@
 from sklearn.datasets import fetch_california_housing
 import numpy as np
-import tensorflow.compat.v1 as tf
+
 
 
 
@@ -15,9 +15,4 @@ XT = tf.transpose(X)
 theta = tf.matmul(tf.matmul(tf.matrix_inverse(tf.matmul(XT, X)), XT), y)
 
 print(theta)
-'''
-tf.compat.v1.disable_eager_execution()
-with tf.Session() as sess:
-    theta_values = sess.run(theta)
-    print(theta_values)
-'''
+
