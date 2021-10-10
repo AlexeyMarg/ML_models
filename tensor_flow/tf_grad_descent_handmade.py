@@ -2,14 +2,6 @@ from sklearn.datasets import fetch_california_housing
 import numpy as np
 import tensorflow as tf
 
-housing = fetch_california_housing()
-m, n = housing.data.shape
-m, n = housing.data.shape
-housing_biased = np.c_[np.ones((m, 1)), housing.data]
-
-X = tf.constant(housing_biased, dtype=tf.float32, name='X')
-y = tf.constant(housing.target.reshape(-1, 1), dtype=tf.float32, name='y')
-
 def z_scaling(X):
     n, m = X.shape
     temp = X[:, 0]
@@ -32,7 +24,29 @@ def z_scaling(X):
         X_norm = tf.concat([X_norm, temp_norm], 1)
     return X_norm
 
-scaled_biased_housing = z_scaling(X)
+housing = fetch_california_housing()
+m, n = housing.data.shape
+m, n = housing.data.shape
+housing_biased = np.c_[np.ones((m, 1)), housing.data]
+
+X = tf.constant(housing_biased, dtype=tf.float32, name='X')
+X = z_scaling(X)
+y = tf.constant(housing.target.reshape(-1, 1), dtype=tf.float32, name='y')
+
+n_epochs = 1000
+learning_rate = 0.01
+
+for epoch in range(n_epochs):
+    if epoch % 100 == 0:
+        theta = tf.Variable(tf.random.uniform([n + 1, 1], -1.0, 1.0), name='theta')
+        y_pred = tf.matmul(X, theta, name='predictions')
+        error = y - y_pred
+        mse = tf.reduce_min(tf.square(error), name='mse')
+        gradients = 2 / m * tf.matmul(tf.transpose(X), error)
+        theta.assign(theta - learning_rate * gradients)
+        print('Epoch: ', epoch, ' MSE: ', mse)
+
+
 
 
 
