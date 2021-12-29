@@ -81,3 +81,23 @@ print(sparse_tensor, "\n")
 
 # You can convert sparse tensors to dense
 print(tf.sparse.to_dense(sparse_tensor))
+
+#Variables
+print('\n\n=============================================\nVariables\n\n')
+my_tensor = tf.constant([[1.0, 2.0], [3.0, 4.0]])
+my_variable = tf.Variable(my_tensor)
+
+# Variables can be all kinds of types, just like tensors
+bool_variable = tf.Variable([False, False, False, True])
+complex_variable = tf.Variable([5 + 4j, 6 + 1j])
+
+print("Shape: ", my_variable.shape)
+print("DType: ", my_variable.dtype)
+print("As NumPy: ", my_variable.numpy())
+
+# Assign variables
+a = tf.Variable([2.0, 3.0], name='my var')
+# This will keep the same dtype, float32
+print('a: ', a)
+a.assign([1, 2])
+print('new a: ', a)
