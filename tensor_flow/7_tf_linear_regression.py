@@ -1,3 +1,4 @@
+import tensorflow as tf
 from sklearn.datasets import fetch_california_housing
 import numpy as np
 <<<<<<< Updated upstream
