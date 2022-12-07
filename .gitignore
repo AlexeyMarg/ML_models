@@ -1,3 +1,7 @@
+.vscode/
+keras/convnet_from_scratch.keras
+keras/convnet_from_scratch_with_augmentation.keras
+kerascheckpoint_path/
 keras/cats_vs_dogs_small
 keras/dogs-vs-cats
 keras/dogs-vs-cats_small
