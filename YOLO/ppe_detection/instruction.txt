@@ -1,0 +1,6 @@
+dataset: https://universe.roboflow.com/roboflow-universe-projects/construction-site-safety/dataset/30
+
+1. Prepare dataset
+2. add 'path' variable to the begin of yaml file
+3. run notebook file to train custom YOLO, resulting weights are in 'runs' folder
+4. upload weights to your code
