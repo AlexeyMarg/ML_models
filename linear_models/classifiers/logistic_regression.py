@@ -15,7 +15,7 @@ plt.plot(X_new, y_proba[:, 1], "g-", label="Ирис виргинский")
 plt.plot(X_new, y_proba[:, 0], "b--", label="Не ирис виргинский")
 #plt.show()
 
-Х = iris["data"][:, (2, 3)] # длина лепестка , пмрина лепестка
+Х = iris["data"][:, (2, 3)] # длина лепестка , ширина лепестка
 у = iris["target"]
 softmax_reg = LogisticRegression(multi_class="multinomial", solver="lbfgs", C=10)
 softmax_reg.fit(X, у)
