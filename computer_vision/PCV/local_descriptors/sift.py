@@ -1,13 +1,14 @@
 from PIL import Image
+from numpy import *
+from pylab import *
 import os
-import numpy as np
-import matplotlib.pyplot as plt
 
-def process_image(imagename, resultname, params='--edge-thresh 10 --peak-thresh 5'):
-    '''обработать изображение и сохранить результаты в файл'''
+
+def process_image(imagename,resultname,params="--edge-thresh 10 --peak-thresh 5"):
+    """ Process an image and save the results in a file. """
 
     if imagename[-3:] != 'pgm':
-        # создать pgm=файл
+        # create a pgm file
         im = Image.open(imagename).convert('L')
         im.save('tmp.pgm')
         imagename = 'tmp.pgm'
@@ -19,35 +20,34 @@ def process_image(imagename, resultname, params='--edge-thresh 10 --peak-thresh 
 
 
 def read_features_from_file(filename):
-    '''прочитать признаки и вернуть их в виде матрицы'''
-
-    f = np.loadtxt(filename)
-    return f[:,:4], f[:, 4:]
-
-
-def write_features_to_file(filename, locs, desc):
-    '''сохранить положения и дескрипторы в файле'''
+    """ Read feature properties and return in matrix form. """
     
-    np.savetxt(filename, np.hstack((locs, desc)))
+    f = loadtxt(filename)
+    return f[:,:4],f[:,4:] # feature locations, descriptors
 
+
+def write_features_to_file(filename,locs,desc):
+    """ Save feature location and descriptor to file. """
+    savetxt(filename,hstack((locs,desc)))
+    
 
 def plot_features(im,locs,circle=False):
-    """ показать изображение с признаками. Вход: изображение в виде массива, 
-    locs (строка, столбецб ориентация для каждого признака) """
+    """ Show image with features. input: im (image as array), 
+        locs (row, col, scale, orientation of each feature). """
 
     def draw_circle(c,r):
-        t = np.arange(0,1.01,.01)*2*np.pi
-        x = r*np.cos(t) + c[0]
-        y = r*np.sin(t) + c[1]
-        plt.plot(x,y,'b',linewidth=2)
+        t = arange(0,1.01,.01)*2*pi
+        x = r*cos(t) + c[0]
+        y = r*sin(t) + c[1]
+        plot(x,y,'b',linewidth=2)
 
-    plt.imshow(im)
+    imshow(im)
     if circle:
         for p in locs:
             draw_circle(p[:2],p[2]) 
     else:
-        plt.plot(locs[:,0],locs[:,1],'ob')
-    plt.axis('off')
+        plot(locs[:,0],locs[:,1],'ob')
+    axis('off')
 
 
 def match(desc1,desc2):
@@ -56,22 +56,22 @@ def match(desc1,desc2):
         input: desc1 (descriptors for the first image), 
         desc2 (same for second image). """
     
-    desc1 = np.array([d/np.linalg.norm(d) for d in desc1])
-    desc2 = np.array([d/np.linalg.norm(d) for d in desc2])
+    desc1 = array([d/linalg.norm(d) for d in desc1])
+    desc2 = array([d/linalg.norm(d) for d in desc2])
     
     dist_ratio = 0.6
     desc1_size = desc1.shape
     
-    matchscores = np.zeros((desc1_size[0]),'int')
+    matchscores = zeros((desc1_size[0]),'int')
     desc2t = desc2.T # precompute matrix transpose
     for i in range(desc1_size[0]):
-        dotprods = np.dot(desc1[i,:],desc2t) # vector of dot products
+        dotprods = dot(desc1[i,:],desc2t) # vector of dot products
         dotprods = 0.9999*dotprods
         # inverse cosine and sort, return index for features in second image
-        indx = np.argsort(np.arccos(dotprods))
+        indx = argsort(arccos(dotprods))
         
         # check if nearest neighbor has angle less than dist_ratio times 2nd
-        if np.arccos(dotprods)[indx[0]] < dist_ratio * np.arccos(dotprods)[indx[1]]:
+        if arccos(dotprods)[indx[0]] < dist_ratio * arccos(dotprods)[indx[1]]:
             matchscores[i] = int(indx[0])
     
     return matchscores
@@ -85,12 +85,12 @@ def appendimages(im1,im2):
     rows2 = im2.shape[0]
     
     if rows1 < rows2:
-        im1 = np.concatenate((im1,np.zeros((rows2-rows1,im1.shape[1]))), axis=0)
+        im1 = concatenate((im1,zeros((rows2-rows1,im1.shape[1]))), axis=0)
     elif rows1 > rows2:
-        im2 = np.concatenate((im2,np.zeros((rows1-rows2,im2.shape[1]))), axis=0)
+        im2 = concatenate((im2,zeros((rows1-rows2,im2.shape[1]))), axis=0)
     # if none of these cases they are equal, no filling needed.
     
-    return np.concatenate((im1,im2), axis=1)
+    return concatenate((im1,im2), axis=1)
 
 
 def plot_matches(im1,im2,locs1,locs2,matchscores,show_below=True):
@@ -100,17 +100,17 @@ def plot_matches(im1,im2,locs1,locs2,matchscores,show_below=True):
     
     im3 = appendimages(im1,im2)
     if show_below:
-        im3 = np.vstack((im3,im3))
+        im3 = vstack((im3,im3))
     
     # show image
-    plt.imshow(im3)
+    imshow(im3)
     
     # draw lines for matches
     cols1 = im1.shape[1]
     for i,m in enumerate(matchscores):
         if m>0:
-            plt.plot([locs1[i][0],locs2[m][0]+cols1],[locs1[i][1],locs2[m][1]],'c')
-    plt.axis('off')
+            plot([locs1[i][0],locs2[m][0]+cols1],[locs1[i][1],locs2[m][1]],'c')
+    axis('off')
 
 
 def match_twosided(desc1,desc2):
