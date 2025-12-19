@@ -1,0 +1,10 @@
+# .dockerignore
+__pycache__/
+*.pyc
+*.pyo
+.ipynb_checkpoints/
+data/
+models/
+logs/
+.env
+.git

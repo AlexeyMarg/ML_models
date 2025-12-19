@@ -1,0 +1,63 @@
+build image: docker buildx build -t wine-predictor:v1 .
+run: docker run -d -p 8000:8000 --name wine-api wine-predictor:v1
+check: curl http://localhost:8000/health
+predict example: curl -X POST "http://localhost:8000/predict" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "alcohol": 13.2,
+    "malic_acid": 2.77,
+    "ash": 2.51,
+    "alcalinity_of_ash": 18.5,
+    "magnesium": 96.0,
+    "total_phenols": 2.45,
+    "flavanoids": 2.53,
+    "nonflavanoid_phenols": 0.29,
+    "proanthocyanins": 1.54,
+    "color_intensity": 5.0,
+    "hue": 1.04,
+    "od280_od315_of_diluted_wines": 3.47,
+    "proline": 920.0
+  }'
+
+windows prediction test:
+$body = @{
+    alcohol = 13.2
+    malic_acid = 2.77
+    ash = 2.51
+    alcalinity_of_ash = 18.5
+    magnesium = 96.0
+    total_phenols = 2.45
+    flavanoids = 2.53
+    nonflavanoid_phenols = 0.29
+    proanthocyanins = 1.54
+    color_intensity = 5.0
+    hue = 1.04
+    od280_od315_of_diluted_wines = 3.47
+    proline = 920.0
+}
+
+$json = $body | ConvertTo-Json
+Write-Host "Sending JSON:" -ForegroundColor Yellow
+Write-Host $json -ForegroundColor Cyan
+
+$response = Invoke-RestMethod -Uri "http://localhost:8000/predict" -Method Post -ContentType "application/json" -Body $json
+$response
+
+linux predictio test
+curl -X POST "http://localhost:8000/predict" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "alcohol": 13.2,
+    "malic_acid": 2.77,
+    "ash": 2.51,
+    "alcalinity_of_ash": 18.5,
+    "magnesium": 96.0,
+    "total_phenols": 2.45,
+    "flavanoids": 2.53,
+    "nonflavanoid_phenols": 0.29,
+    "proanthocyanins": 1.54,
+    "color_intensity": 5.0,
+    "hue": 1.04,
+    "od280_od315_of_diluted_wines": 3.47,
+    "proline": 920.0
+  }'
