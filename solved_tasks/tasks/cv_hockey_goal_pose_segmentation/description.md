@@ -1,5 +1,7 @@
 # Hockey Goal Detection and Geometry Estimation
 
+Dataset: https://drive.google.com/drive/folders/1X0DBl1SeDW0JLYOwi8S33tH9TP2bmTxv?usp=sharing
+
 ## Project Description
 
 This project is designed for automatic detection of hockey goals and estimation of their geometric structure from images.
@@ -29,26 +31,6 @@ Before training, the exported data is converted into separate datasets:
 - one dataset for segmentation.
 
 The original Label Studio export is not edited manually.
-
-## Source Data Structure
-
-After export from Label Studio, the source data is expected to have the following structure:
-
-    source_dataset/
-      images/
-        image_001.jpg
-        image_002.jpg
-        ...
-      labels/
-        image_001.txt
-        image_002.txt
-        ...
-
-Each image must have a corresponding label file with the same filename and the `.txt` extension.
-
-For pose estimation, the source labels contain object bounding boxes and four corner keypoints.
-
-For segmentation, the source labels contain polygon annotations of the goal silhouette.
 
 ## Pose Estimation Task
 
@@ -81,7 +63,7 @@ This approach is useful for estimating the general shape of the goal and can be 
 
 ## Project Files
 
-### prepare_goal_pose_dataset.py
+### prepare_pose_dataset.py
 
 This script prepares the pose-estimation dataset.
 
@@ -104,9 +86,9 @@ Output:
 
 Typical usage:
 
-    python prepare_goal_pose_dataset.py --src label_studio_pose_export --dst yolo_pose_dataset --train-ratio 0.8
+    python prepare_pose_dataset.py --src label_studio_pose_export --dst yolo_pose_dataset --train-ratio 0.8
 
-### prepare_goal_seg_dataset.py
+### prepare_seg_dataset.py
 
 This script prepares the segmentation dataset.
 
@@ -129,9 +111,9 @@ Output:
 
 Typical usage:
 
-    python prepare_goal_seg_dataset.py --src label_studio_seg_export --dst yolo_seg_dataset --train-ratio 0.8
+    python prepare_seg_dataset.py --src label_studio_seg_export --dst yolo_seg_dataset --train-ratio 0.8
 
-### train_goal_pose.py
+### train_pose.py
 
 This script trains a YOLO pose model.
 
@@ -147,7 +129,7 @@ Typical output:
 
     runs/pose/train/weights/best.pt
 
-### train_goal_seg.py
+### train_seg.py
 
 This script trains a YOLO segmentation model.
 
@@ -206,96 +188,6 @@ Output:
 
     image with detected goal silhouette and approximated quadrilateral
 
-## Recommended Workflow
-
-### 1. Annotate images in Label Studio
-
-Each hockey goal should be annotated with:
-
-- bounding box;
-- four corner keypoints;
-- polygon silhouette.
-
-### 2. Export annotations
-
-Export the data from Label Studio using the appropriate export option with images.
-
-Create separate exports if needed:
-
-- one export for pose annotations;
-- one export for segmentation annotations.
-
-### 3. Prepare datasets
-
-For pose estimation:
-
-    python prepare_goal_pose_dataset.py --src pose_dataset --dst yolo_pose_dataset --train-ratio 0.8
-
-For segmentation:
-
-    python prepare_goal_seg_dataset.py --src seg_dataset --dst yolo_seg_dataset --train-ratio 0.8
-
-### 4. Train models
-
-Train the pose model:
-
-    python train_goal_pose.py
-
-Train the segmentation model:
-
-    python train_goal_seg.py
-
-### 5. Test models
-
-Run pose prediction on one image:
-
-    python predict_one_pose.py
-
-Run segmentation prediction on one image:
-
-    python predict_one_seg.py
-
-## Data Preparation Notes
-
-The dataset preparation scripts do not modify the original Label Studio export.
-
-They only create a new training dataset directory with:
-
-- training images;
-- validation images;
-- training labels;
-- validation labels;
-- dataset configuration file.
-
-This makes it possible to keep the original exported annotations unchanged and repeat the preparation step with different train-validation splits if needed.
-
-## Practical Notes
-
-The pose model is preferred when the main goal is accurate localization of the four goal corners.
-
-The segmentation model is useful when the goal silhouette is important or when the goal shape should be estimated as a region.
-
-For robust performance, the dataset should contain images with:
-
-- different viewpoints;
-- different camera distances;
-- partially occluded goals;
-- goalkeepers and players in front of the goal;
-- different lighting conditions;
-- motion blur;
-- different arenas and backgrounds.
-
-## Summary
-
-This project provides a complete workflow for hockey goal geometry estimation:
-
-- annotation in Label Studio;
-- preparation of pose and segmentation datasets;
-- training of YOLO pose and segmentation models;
-- inference on test images;
-- visualization of detected goals, keypoints, and polygonal silhouettes.
-
-The pose pipeline is used for direct estimation of four goal corners, while the segmentation pipeline provides an additional geometric representation of the goal silhouette.
 
 
 
@@ -303,4 +195,3 @@ The pose pipeline is used for direct estimation of four goal corners, while the 
 
 
 
-https://drive.google.com/drive/folders/1X0DBl1SeDW0JLYOwi8S33tH9TP2bmTxv?usp=sharing
