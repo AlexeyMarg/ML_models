@@ -1,67 +1,33 @@
 # ML_models
 
-## classik_ml
-### linear_models:
-- regressors
-- classifiers
+## aproximators
+Models for aproximation of finction and system dynamics
 
-### SVM:
-- classifiers
-- regressors
+## basic_frameworks
+- sklearn
+- torch
+- keras
+- tensorflow
 
-### Decision tree:
-- regressors
-- classifiers
+## classification
+One and multiclass classification tasks
 
-### Ensembles
-- voting_clf.py - voting classifier with random forrest, SVM and logistic regression
-- bagging_clf.py - use of bagging (random choise of train data) for decision tree in iris task
-- AdaBoost_clf.py - use of adaptive boosting for decision tree in iris task
-- gradient_boost_reg.py - gradient boosting regressor for noised parabola
-
-### Dimensions reduction
-- PCA.py - handmade and sklearn principal component reduction for dimension reduction
-= batch_PCA.py - incremental PCA (less use of memory) for batch principal component reduction for dimension reduction for MNIST
-- kernel_PCA.py - kernel PCA dimension reduction
-- LLE.py - Locally linear embedding for dimension reduction
+## clustering
+Clustering of data without labels
 
 ## computer_vision
-- read, transform and filter
-- local descriptors
-- image transform
-- camera model
+- opencv
+- deep models
+- YOLO
 
-## hugging_face
-- example of using pretrained models
+## nlp
+Some models for natural language processing
 
-## pytorch
-- basics
-- NN classification
-- CNN
-- RNN
-- self-attention
-- gpt2
-- bert
-- GAN
-- GNN
-- RL
+## preprocessing
+Some technics of data preprocessing
 
-## tensor_flow
-- basics
+## regression
+Solutions of regression tasks
 
-## keras
-- basics
-- dense NN
-- CNN
-- RNN
-- text generation
-- picture generation
-- using of keras in sklearn
-
-## solved_tasks
-
-## YOLO
-- car counter
-- people counter
-- poker hand
-- ppe detection
+## scratch
+Models from scratch
